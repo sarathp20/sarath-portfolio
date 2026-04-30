@@ -1,65 +1,219 @@
-import Image from "next/image";
+// app/page.tsx
+'use client'
+
+import Link from 'next/link'
+import { useState, useEffect } from 'react'
+
+function calcDuration(start: Date, end: Date) {
+  const months =
+    (end.getFullYear() - start.getFullYear()) * 12 +
+    (end.getMonth() - start.getMonth()) +
+    1
+  const years = Math.floor(months / 12)
+  const remainingMonths = months % 12
+  if (years === 0) return `${remainingMonths}mo`
+  if (remainingMonths === 0) return `${years}yr`
+  return `${years}yr ${remainingMonths}mo`
+}
+
+function calcTotalYears(start: Date, end: Date) {
+  const months =
+    (end.getFullYear() - start.getFullYear()) * 12 +
+    (end.getMonth() - start.getMonth()) +
+    1
+  const years = Math.floor(months / 12)
+  const remainingMonths = months % 12
+  if (remainingMonths === 0) return `${years} yrs`
+  return `${years} yrs ${remainingMonths} mos`
+}
+
+const experiences = [
+  {
+    role: 'Software Developer',
+    company: 'IBM',
+    start: new Date(2022, 6),
+    end: null,
+    description:
+      'Built enterprise React applications on IBM App Connect SaaS. Led accessibility remediation, performance optimisation, and LLM integrations using IBM WatsonX.',
+  },
+  {
+    role: 'Software Developer Intern',
+    company: 'IBM',
+    start: new Date(2022, 0),
+    end: new Date(2022, 5),
+    description:
+      'Migrated product modules from AngularJS to React. Built frontend test coverage from scratch using React Testing Library and Jest.',
+  },
+]
+
+const specialisations = [
+  {
+    label: 'React & TypeScript',
+    desc: 'Hooks, Context, Redux, component architecture',
+  },
+  {
+    label: 'Frontend Performance',
+    desc: '10% load-time reduction, bundle optimisation',
+  },
+  {
+    label: 'Accessibility',
+    desc: 'JAWS / WCAG compliance, enterprise standards',
+  },
+  {
+    label: 'Node.js & APIs',
+    desc: 'Express, REST, tRPC, WebSockets',
+  },
+  { label: 'Testing', desc: 'Jest, RTL, Cypress, CodeceptJS' },
+  { label: 'LLM Integration', desc: 'IBM WatsonX, enterprise AI tooling' },
+]
 
 export default function Home() {
+  const [now, setNow] = useState(new Date())
+  const [expanded, setExpanded] = useState(false)
+
+  useEffect(() => {
+    const timer = setInterval(() => setNow(new Date()), 60_000)
+    return () => clearInterval(timer)
+  }, [])
+
+  const careerStart = new Date(2022, 0)
+  const totalExp = calcTotalYears(careerStart, now)
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <section className="flex min-h-screen flex-col justify-center gap-6 py-16 sm:py-20">
+        <p className="font-mono text-sm text-amber-400">Hi, I'm</p>
+
+        <div className="flex flex-col gap-3">
+          <h1 className="text-4xl font-bold tracking-tight text-zinc-100 sm:text-5xl lg:text-7xl">
+            Sarath P
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+          <h2 className="text-2xl font-medium text-zinc-400 sm:text-3xl">
+            Full Stack Software Engineer
+          </h2>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div className="flex flex-wrap gap-2">
+          {specialisations.map(s => (
+            <span
+              key={s.label}
+              title={s.desc}
+              className="cursor-default rounded-full border border-zinc-700 bg-zinc-800 px-3 py-1 font-mono text-xs text-zinc-300"
+            >
+              {s.label}
+            </span>
+          ))}
         </div>
-      </main>
-    </div>
-  );
+
+        <p className="max-w-2xl text-base leading-relaxed text-zinc-500 sm:text-lg">
+          Specialising in React, TypeScript, and Node.js — with a strong focus
+          on accessibility, frontend performance, and building scalable
+          enterprise UI. AWS Certified with hands-on experience integrating LLM
+          models into production applications.
+        </p>
+
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-wrap items-center gap-4">
+            <Link
+              href="/projects"
+              className="rounded px-6 py-3 text-sm font-semibold bg-amber-400 text-zinc-950 transition-colors hover:bg-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+            >
+              See my work
+            </Link>
+            <Link
+              href="/contact"
+              className="rounded border border-zinc-700 px-6 py-3 text-sm font-medium text-zinc-300 transition-colors hover:border-zinc-500 hover:text-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+            >
+              Get in touch
+            </Link>
+          </div>
+          <Link
+            href="/publications"
+            className="self-start font-mono text-xs text-zinc-500 hover:text-amber-400 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded"
+          >
+            or read my publications →
+          </Link>
+        </div>
+
+        <div className="flex flex-col gap-8 border-t border-zinc-800 pt-10 sm:flex-row sm:flex-wrap sm:items-start sm:gap-12">
+          <div className="flex flex-col gap-1">
+            <button
+              onClick={() => setExpanded(prev => !prev)}
+              className="flex items-center gap-2 self-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+              aria-expanded={expanded}
+              aria-label="Toggle experience details"
+            >
+              <span className="text-3xl font-bold text-amber-400 sm:text-4xl">
+                {totalExp}
+              </span>
+              <span
+                className={`text-lg text-zinc-500 transition-transform duration-200 ${
+                  expanded ? 'rotate-180' : ''
+                }`}
+              >
+                ↓
+              </span>
+            </button>
+            <span className="text-sm text-zinc-500">Experience</span>
+
+            {expanded && (
+              <div className="mt-4 flex flex-col gap-4">
+                {experiences.map(exp => {
+                  const end = exp.end ?? now
+                  const duration = calcDuration(exp.start, end)
+                  const startStr = exp.start.toLocaleString('default', {
+                    month: 'short',
+                    year: 'numeric',
+                  })
+                  const endStr = exp.end
+                    ? exp.end.toLocaleString('default', {
+                        month: 'short',
+                        year: 'numeric',
+                      })
+                    : 'Present'
+
+                  return (
+                    <div
+                      key={exp.role}
+                      className="flex flex-col gap-1 border-l-2 border-amber-400/40 pl-4"
+                    >
+                      <span className="text-sm font-semibold text-zinc-100">
+                        {exp.role}
+                      </span>
+                      <span className="text-xs text-zinc-400">
+                        {exp.company}
+                      </span>
+                      <span className="font-mono text-xs text-amber-400">
+                        {startStr} – {endStr}
+                        <span className="ml-2 text-zinc-500">
+                          ({duration})
+                        </span>
+                      </span>
+                      <p className="mt-1 max-w-xs text-xs leading-relaxed text-zinc-500">
+                        {exp.description}
+                      </p>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <span className="text-3xl font-bold text-amber-400 sm:text-4xl">
+              AWS
+            </span>
+            <span className="text-sm text-zinc-500">Certified</span>
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <span className="text-3xl font-bold text-amber-400 sm:text-4xl">
+              IEEE
+            </span>
+            <span className="text-sm text-zinc-500">Published</span>
+          </div>
+        </div>
+      </section>
+    </main>
+  )
 }
