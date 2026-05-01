@@ -4,8 +4,8 @@ import Navbar from './components/Navbar'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Sarath P — Full Stack Engineer',
-  description: 'Full Stack Software Engineer · React · TypeScript · AWS Certified',
+  title: 'Sarath P — Software Developer',
+  description: 'Software Developer (Full Stack) · React · TypeScript · AWS Certified',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

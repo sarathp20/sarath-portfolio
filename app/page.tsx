@@ -89,7 +89,7 @@ export default function Home() {
             Sarath P
           </h1>
           <h2 className="text-2xl font-medium text-zinc-400 sm:text-3xl">
-            Full Stack Software Engineer
+          Software Developer (Full Stack)
           </h2>
         </div>
 
