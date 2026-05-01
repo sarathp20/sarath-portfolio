@@ -48,7 +48,7 @@ const experiences = [
 
 const specialisations = [
   {
-    label: 'React & TypeScript',
+    label: 'React & TypeScript/JavaScript',
     desc: 'Hooks, Context, Redux, component architecture',
   },
   {
@@ -106,7 +106,7 @@ export default function Home() {
         </div>
 
         <p className="max-w-2xl text-base leading-relaxed text-zinc-500 sm:text-lg">
-          Specialising in React, TypeScript, and Node.js — with a strong focus
+          Specialising in React, TypeScript/JavaScript, and Node.js — with a strong focus
           on accessibility, frontend performance, and building scalable
           enterprise UI. AWS Certified with hands-on experience integrating LLM
           models into production applications.
