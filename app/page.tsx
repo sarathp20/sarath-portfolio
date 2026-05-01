@@ -47,22 +47,10 @@ const experiences = [
 ]
 
 const specialisations = [
-  {
-    label: 'React & TypeScript/JavaScript',
-    desc: 'Hooks, Context, Redux, component architecture',
-  },
-  {
-    label: 'Frontend Performance',
-    desc: '10% load-time reduction, bundle optimisation',
-  },
-  {
-    label: 'Accessibility',
-    desc: 'JAWS / WCAG compliance, enterprise standards',
-  },
-  {
-    label: 'Node.js & APIs',
-    desc: 'Express, REST, tRPC, WebSockets',
-  },
+  { label: 'React & TypeScript/JavaScript', desc: 'Hooks, Context, Redux, component architecture' },
+  { label: 'Frontend Performance', desc: '10% load-time reduction, bundle optimisation' },
+  { label: 'Accessibility', desc: 'JAWS / WCAG compliance, enterprise standards' },
+  { label: 'Node.js & APIs', desc: 'Express, REST, tRPC, WebSockets' },
   { label: 'Testing', desc: 'Jest, RTL, Cypress, CodeceptJS' },
   { label: 'LLM Integration', desc: 'IBM WatsonX, enterprise AI tooling' },
 ]
@@ -82,6 +70,7 @@ export default function Home() {
   return (
     <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
       <section className="flex min-h-screen flex-col justify-center gap-6 py-16 sm:py-20">
+
         <p className="font-mono text-sm text-amber-400">Hi, I'm</p>
 
         <div className="flex flex-col gap-3">
@@ -89,7 +78,7 @@ export default function Home() {
             Sarath P
           </h1>
           <h2 className="text-2xl font-medium text-zinc-400 sm:text-3xl">
-          Software Developer (Full Stack)
+            Software Developer (Full Stack)
           </h2>
         </div>
 
@@ -107,9 +96,8 @@ export default function Home() {
 
         <p className="max-w-2xl text-base leading-relaxed text-zinc-500 sm:text-lg">
           Specialising in React, TypeScript/JavaScript, and Node.js — with a strong focus
-          on accessibility, frontend performance, and building scalable
-          enterprise UI. AWS Certified with hands-on experience integrating LLM
-          models into production applications.
+          on accessibility, frontend performance, and building scalable enterprise UI.
+          AWS Certified with hands-on experience integrating LLM models into production applications.
         </p>
 
         <div className="flex flex-col gap-3">
@@ -127,30 +115,22 @@ export default function Home() {
               Get in touch
             </Link>
           </div>
-          <Link
-            href="/publications"
-            className="self-start font-mono text-xs text-zinc-500 hover:text-amber-400 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded"
-          >
-            or read my publications →
-          </Link>
         </div>
 
         <div className="flex flex-col gap-8 border-t border-zinc-800 pt-10 sm:flex-row sm:flex-wrap sm:items-start sm:gap-12">
+
+          {/* Experience */}
           <div className="flex flex-col gap-1">
             <button
               onClick={() => setExpanded(prev => !prev)}
-              className="flex items-center gap-2 self-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+              className="flex items-center gap-2 self-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded"
               aria-expanded={expanded}
               aria-label="Toggle experience details"
             >
               <span className="text-3xl font-bold text-amber-400 sm:text-4xl">
                 {totalExp}
               </span>
-              <span
-                className={`text-lg text-zinc-500 transition-transform duration-200 ${
-                  expanded ? 'rotate-180' : ''
-                }`}
-              >
+              <span className={`text-lg text-zinc-500 transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`}>
                 ↓
               </span>
             </button>
@@ -161,33 +141,18 @@ export default function Home() {
                 {experiences.map(exp => {
                   const end = exp.end ?? now
                   const duration = calcDuration(exp.start, end)
-                  const startStr = exp.start.toLocaleString('default', {
-                    month: 'short',
-                    year: 'numeric',
-                  })
+                  const startStr = exp.start.toLocaleString('default', { month: 'short', year: 'numeric' })
                   const endStr = exp.end
-                    ? exp.end.toLocaleString('default', {
-                        month: 'short',
-                        year: 'numeric',
-                      })
+                    ? exp.end.toLocaleString('default', { month: 'short', year: 'numeric' })
                     : 'Present'
 
                   return (
-                    <div
-                      key={exp.role}
-                      className="flex flex-col gap-1 border-l-2 border-amber-400/40 pl-4"
-                    >
-                      <span className="text-sm font-semibold text-zinc-100">
-                        {exp.role}
-                      </span>
-                      <span className="text-xs text-zinc-400">
-                        {exp.company}
-                      </span>
+                    <div key={exp.role} className="flex flex-col gap-1 border-l-2 border-amber-400/40 pl-4">
+                      <span className="text-sm font-semibold text-zinc-100">{exp.role}</span>
+                      <span className="text-xs text-zinc-400">{exp.company}</span>
                       <span className="font-mono text-xs text-amber-400">
                         {startStr} – {endStr}
-                        <span className="ml-2 text-zinc-500">
-                          ({duration})
-                        </span>
+                        <span className="ml-2 text-zinc-500">({duration})</span>
                       </span>
                       <p className="mt-1 max-w-xs text-xs leading-relaxed text-zinc-500">
                         {exp.description}
@@ -199,19 +164,42 @@ export default function Home() {
             )}
           </div>
 
-          <div className="flex flex-col gap-1">
-            <span className="text-3xl font-bold text-amber-400 sm:text-4xl">
-              AWS
+          {/* AWS */}
+          <a
+            href="https://www.credly.com/badges/c6f46a72-ba59-4ff2-96a4-6cdf4b9d20fc/linked_in_profile"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="AWS Certified — view credential on Credly, opens in a new tab"
+            className="group flex flex-col gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded"
+          >
+            <span className="text-3xl font-bold text-amber-400 sm:text-4xl">AWS</span>
+            <span className="text-sm text-zinc-500 group-hover:text-zinc-300 transition-colors duration-200">
+              Certified ↗
             </span>
-            <span className="text-sm text-zinc-500">Certified</span>
-          </div>
+          </a>
 
-          <div className="flex flex-col gap-1">
-            <span className="text-3xl font-bold text-amber-400 sm:text-4xl">
-              IEEE
+          {/* IEEE — links to publications */}
+          <Link
+            href="/publications#research"
+            className="group flex flex-col gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded"
+          >
+            <span className="text-3xl font-bold text-amber-400 sm:text-4xl">IEEE</span>
+            <span className="text-sm text-zinc-500 group-hover:text-zinc-300 transition-colors duration-200">
+              Research →
             </span>
-            <span className="text-sm text-zinc-500">Published</span>
-          </div>
+          </Link>
+
+          {/* Blog — links to publications */}
+          <Link
+            href="/publications#blog"
+            className="group flex flex-col gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded"
+          >
+            <span className="text-3xl font-bold text-amber-400 sm:text-4xl">Blog</span>
+            <span className="text-sm text-zinc-500 group-hover:text-zinc-300 transition-colors duration-200">
+              Writing →
+            </span>
+          </Link>
+
         </div>
       </section>
     </main>

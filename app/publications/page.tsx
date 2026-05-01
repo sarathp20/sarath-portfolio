@@ -7,7 +7,6 @@ const publications = [
       'Proposed a Stacked Attention Network combined with BERT embeddings to answer questions grounded in textbook diagrams and figures. Published and indexed in IEEE Xplore.',
     tags: ['Python', 'BERT', 'Deep Learning', 'VQA'],
     link: 'https://ieeexplore.ieee.org/document/10040113',
-    linkLabel: 'IEEE Xplore ↗',
   },
   {
     type: 'Blog Post',
@@ -17,7 +16,6 @@ const publications = [
       'A deep-dive into the Record & Replay feature built for IBM App Connect SaaS — covering the motivation, architecture, and how it enables developers to capture and retrigger integration flow messages.',
     tags: ['IBM App Connect', 'Integration', 'React', 'MQ'],
     link: 'https://community.ibm.com/community/user/blogs/sarath-p/2026/01/09/record-and-replay-appconnect-iwhi',
-    linkLabel: 'Read on IBM Community ↗',
   },
 ]
 
@@ -28,29 +26,22 @@ function PublicationCard({
   description,
   tags,
   link,
-  linkLabel,
 }: (typeof publications)[number]) {
   return (
-    <article
-      aria-label={title}
-      className="flex flex-col gap-4 p-6 bg-zinc-900 rounded-xl border border-zinc-800 ring-1 ring-zinc-800 hover:border-zinc-700 hover:ring-amber-400/20 hover:shadow-lg hover:shadow-amber-400/5 transition-all duration-200"
+    <a
+      href={link}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${title} — opens in a new tab`}
+      className="group flex flex-col gap-4 p-6 bg-zinc-900 rounded-xl border border-zinc-800 ring-1 ring-zinc-800 hover:border-zinc-700 hover:ring-amber-400/20 hover:shadow-lg hover:shadow-amber-400/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 transition-all duration-200"
     >
-      {/* Stack vertically on mobile, row on sm+ */}
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+      <div className="flex items-start justify-between gap-4">
         <div className="flex flex-col gap-1">
-          <span className="text-xs font-mono text-amber-400" aria-label={`Type: ${type}`}>{type}</span>
+          <span className="text-xs font-mono text-amber-400">{type}</span>
           <h2 className="text-lg font-semibold text-zinc-100">{title}</h2>
           <span className="text-xs font-mono text-zinc-500">{venue}</span>
         </div>
-        <a
-          href={link}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`${linkLabel} — opens in a new tab`}
-          className="self-start shrink-0 text-xs font-mono px-3 py-2 min-h-9 flex items-center rounded border border-zinc-700 text-zinc-500 hover:border-zinc-500 hover:text-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 transition-all duration-200"
-        >
-          {linkLabel}
-        </a>
+        <span className="shrink-0 text-zinc-600 group-hover:text-amber-400 transition-colors duration-200" aria-hidden="true">↗</span>
       </div>
       <p className="text-sm leading-relaxed text-zinc-400">{description}</p>
       <ul
@@ -66,7 +57,7 @@ function PublicationCard({
           </li>
         ))}
       </ul>
-    </article>
+    </a>
   )
 }
 
