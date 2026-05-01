@@ -158,7 +158,7 @@ export default function ProjectTabs({ repos }: Props) {
                 className="flex flex-col gap-4 p-6 bg-zinc-900 rounded-xl border border-zinc-800 ring-1 ring-zinc-800 hover:border-zinc-700 hover:ring-amber-400/20 hover:shadow-lg hover:shadow-amber-400/5 transition-all duration-200"
               >
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                  <h2 className="text-lg font-semibold text-zinc-100 break-words min-w-0">
+                  <h2 className="text-lg font-semibold text-zinc-100 wrap-break-word min-w-0">
                     {repo.name.replace(/[-_]/g, ' ')}
                   </h2>
                   <a
@@ -166,7 +166,7 @@ export default function ProjectTabs({ repos }: Props) {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`View ${repo.name} on GitHub — opens in a new tab`}
-                    className="self-start shrink-0 text-xs font-mono px-3 py-2 min-h-[36px] flex items-center rounded border border-zinc-700 text-zinc-500 hover:border-zinc-500 hover:text-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 transition-all duration-200"
+                    className="self-start shrink-0 text-xs font-mono px-3 py-2 min-h-9 flex items-center rounded border border-zinc-700 text-zinc-500 hover:border-zinc-500 hover:text-zinc-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 transition-all duration-200"
                   >
                     GitHub ↗
                   </a>
