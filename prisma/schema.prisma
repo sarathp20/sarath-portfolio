@@ -1,0 +1,17 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Contact {
+  id        String   @id @default(cuid())  // cuid is better than autoincrement for public IDs
+  name      String
+  email     String
+  message   String
+  read      Boolean  @default(false)       // track if you've seen it
+  createdAt DateTime @default(now())
+}

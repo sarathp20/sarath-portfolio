@@ -1,60 +1,63 @@
-// app/api/contact/route.ts
-import { Resend } from 'resend'
-import { NextRequest } from 'next/server'
+import { NextRequest }  from 'next/server'
+import { z }            from 'zod'
+import { Resend }       from 'resend'
+import { prisma }       from '@/lib/prisma'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+const contactSchema = z.object({
+  name:    z.string().min(2,  'Name must be at least 2 characters'),
+  email:   z.string().email('Invalid email address'),
+  message: z.string().min(10, 'Message must be at least 10 characters'),
+})
+
 export async function POST(req: NextRequest) {
   try {
-    // 1. Parse the JSON body sent from the form
-    const body = await req.json()
-    const { name, email, message } = body
+    // 1. Parse and validate
+    const body   = await req.json()
+    const result = contactSchema.safeParse(body)
 
-    // 2. Validate — never trust client input
-    if (!name || !email || !message) {
-      return Response.json(
-        { error: 'Name, email and message are required.' },
-        { status: 400 }  // 400 = bad request
-      )
+    if (!result.success) {
+      return Response.json({
+        success: false,
+        errors: result.error.issues.map(i => ({
+          field:   i.path[0],
+          message: i.message,
+        })),
+      }, { status: 400 })
     }
 
-    // Basic email format check
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) {
-      return Response.json(
-        { error: 'Invalid email address.' },
-        { status: 400 }
-      )
-    }
+    const { name, email, message } = result.data
 
-    // 3. Send the email via Resend
-    await resend.emails.send({
-      from: 'Portfolio Contact <onboarding@resend.dev>', // use this until you have a domain
-      to: 'sarathp20@gmail.com',
-      replyTo: email,           // ← replying goes directly to the recruiter
-      subject: `Portfolio message from ${name}`,
+    // 2. Save to database — even if email fails, submission is not lost
+    const contact = await prisma.contact.create({
+      data: { name, email, message },
+    })
+
+    // 3. Send email notification to you
+    const emailResult = await resend.emails.send({
+      from:    'Portfolio <onboarding@resend.dev>',
+      to:      'sarathp20@gmail.com',
+      replyTo: email,
+      subject: `New message from ${name}`,
       html: `
-        <div style="font-family: sans-serif; max-width: 600px;">
-          <h2 style="color: #fbbf24;">New message from your portfolio</h2>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
+        <div style="font-family:sans-serif;max-width:600px">
+          <h2>New portfolio message</h2>
+          <p><strong>From:</strong> ${name} (${email})</p>
           <p><strong>Message:</strong></p>
-          <p style="background:#f4f4f5; padding: 16px; border-radius: 8px;">${message}</p>
+          <p style="background:#f4f4f5;padding:16px;border-radius:8px">${message}</p>
+          <p style="color:#999;font-size:12px">Submission ID: ${contact.id}</p>
         </div>
       `,
     })
-
-    // 4. Return success
-    return Response.json(
-      { success: true },
-      { status: 200 }
-    )
+    console.log('Resend result:', emailResult)
+    return Response.json({ success: true }, { status: 201 })
 
   } catch (error) {
-    console.error('Contact form error:', error)
+    console.error('Contact error:', error)
     return Response.json(
-      { error: 'Something went wrong. Please try again.' },
-      { status: 500 }  // 500 = server error
+      { success: false, error: 'Something went wrong' },
+      { status: 500 }
     )
   }
 }
