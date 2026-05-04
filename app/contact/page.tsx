@@ -44,7 +44,7 @@ export default function Contact() {
                     <p className="text-zinc-400">Thanks for reaching out. I'll get back to you soon.</p>
                     <button
                         onClick={() => setStatus('idle')}
-                        className="mt-6 text-sm font-mono text-amber-400 hover:text-amber-300 transition-colors"
+                        className="mt-6 text-sm font-mono text-amber-400 hover:text-amber-300 transition-colors cursor-pointer"
                     >
                         Send another →
                     </button>
@@ -117,7 +117,7 @@ export default function Contact() {
                         <button
                             type="submit"
                             disabled={status === 'loading'}
-                            className="self-start rounded bg-amber-400 px-6 py-3 text-sm font-semibold text-zinc-950 hover:bg-amber-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="self-start rounded bg-amber-400 px-6 py-3 text-sm font-semibold text-zinc-950 hover:bg-amber-300 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {status === 'loading' ? 'Sending...' : 'Send message'}
                         </button>
