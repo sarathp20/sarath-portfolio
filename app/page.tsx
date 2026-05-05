@@ -1,14 +1,13 @@
-// app/page.tsx
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState, useEffect } from 'react'
 
 function calcDuration(start: Date, end: Date) {
   const months =
     (end.getFullYear() - start.getFullYear()) * 12 +
-    (end.getMonth() - start.getMonth()) +
-    1
+    (end.getMonth() - start.getMonth()) + 1
   const years = Math.floor(months / 12)
   const remainingMonths = months % 12
   if (years === 0) return `${remainingMonths}mo`
@@ -19,8 +18,7 @@ function calcDuration(start: Date, end: Date) {
 function calcTotalYears(start: Date, end: Date) {
   const months =
     (end.getFullYear() - start.getFullYear()) * 12 +
-    (end.getMonth() - start.getMonth()) +
-    1
+    (end.getMonth() - start.getMonth()) + 1
   const years = Math.floor(months / 12)
   const remainingMonths = months % 12
   if (remainingMonths === 0) return `${years} yrs`
@@ -47,12 +45,12 @@ const experiences = [
 ]
 
 const specialisations = [
-  { label: 'React & TypeScript/JavaScript', desc: 'Hooks, Context, Redux, component architecture' },
-  { label: 'Frontend Performance', desc: '10% load-time reduction, bundle optimisation' },
-  { label: 'Accessibility', desc: 'JAWS / WCAG compliance, enterprise standards' },
-  { label: 'Node.js & APIs', desc: 'Express, REST, tRPC, WebSockets' },
-  { label: 'Testing', desc: 'Jest, RTL, Cypress, CodeceptJS' },
-  { label: 'LLM Integration', desc: 'IBM WatsonX, enterprise AI tooling' },
+  { label: 'React & TypeScript/JavaScript' },
+  { label: 'Frontend Performance' },
+  { label: 'Accessibility' },
+  { label: 'Node.js & APIs' },
+  { label: 'Testing' },
+  { label: 'LLM Integration' },
 ]
 
 export default function Home() {
@@ -73,20 +71,31 @@ export default function Home() {
 
         <p className="font-mono text-sm text-amber-400">Hi, I'm</p>
 
-        <div className="flex flex-col gap-3">
-          <h1 className="text-4xl font-bold tracking-tight text-zinc-100 sm:text-5xl lg:text-7xl">
-            Sarath P
-          </h1>
-          <h2 className="text-2xl font-medium text-zinc-400 sm:text-3xl">
-            Software Developer (Full Stack)
-          </h2>
+        {/* ── Name + Photo ── */}
+        <div className="flex items-center gap-5">
+          <Image
+            src="/avatar.png"
+            alt="Sarath P"
+            width={88}
+            height={88}
+            priority
+            className="rounded-full border-2 border-zinc-800 object-cover shrink-0 w-20 h-20 sm:w-22 sm:h-22"
+          />
+          <div className="flex flex-col gap-1.5">
+            <h1 className="text-4xl font-bold tracking-tight text-zinc-100 sm:text-5xl lg:text-6xl">
+              Sarath P
+            </h1>
+            <h2 className="text-lg font-medium text-zinc-400 sm:text-xl lg:text-2xl">
+              Software Developer (Full Stack)
+            </h2>
+          </div>
         </div>
 
+        {/* ── Specialisation tags ── */}
         <div className="flex flex-wrap gap-2">
           {specialisations.map(s => (
             <span
               key={s.label}
-              title={s.desc}
               className="cursor-default rounded-full border border-zinc-700 bg-zinc-800 px-3 py-1 font-mono text-xs text-zinc-300"
             >
               {s.label}
@@ -94,36 +103,37 @@ export default function Home() {
           ))}
         </div>
 
+        {/* ── Description ── */}
         <p className="max-w-2xl text-base leading-relaxed text-zinc-500 sm:text-lg">
           Specialising in React, TypeScript/JavaScript, and Node.js — with a strong focus
           on accessibility, frontend performance, and building scalable enterprise UI.
           AWS Certified with hands-on experience integrating LLM models into production applications.
         </p>
 
-        <div className="flex flex-col gap-3">
-          <div className="flex flex-wrap items-center gap-4">
-            <Link
-              href="/projects"
-              className="rounded px-6 py-3 text-sm font-semibold bg-amber-400 text-zinc-950 transition-colors hover:bg-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
-            >
-              See my work
-            </Link>
-            <Link
-              href="/contact"
-              className="rounded border border-zinc-700 px-6 py-3 text-sm font-medium text-zinc-300 transition-colors hover:border-zinc-500 hover:text-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
-            >
-              Get in touch
-            </Link>
-          </div>
+        {/* ── CTAs ── */}
+        <div className="flex flex-wrap items-center gap-4">
+          <Link
+            href="/projects"
+            className="rounded px-6 py-3 text-sm font-semibold bg-amber-400 text-zinc-950 transition-colors hover:bg-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+          >
+            See my work
+          </Link>
+          <Link
+            href="/contact"
+            className="rounded border border-zinc-700 px-6 py-3 text-sm font-medium text-zinc-300 transition-colors hover:border-zinc-500 hover:text-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
+          >
+            Get in touch
+          </Link>
         </div>
 
+        {/* ── Stats ── */}
         <div className="flex flex-col gap-8 border-t border-zinc-800 pt-10 sm:flex-row sm:flex-wrap sm:items-start sm:gap-12">
 
           {/* Experience */}
           <div className="flex flex-col gap-1">
             <button
               onClick={() => setExpanded(prev => !prev)}
-              className="flex items-center gap-2 self-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded"
+              className="flex items-center gap-2 self-start rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
               aria-expanded={expanded}
               aria-label="Toggle experience details"
             >
@@ -145,7 +155,6 @@ export default function Home() {
                   const endStr = exp.end
                     ? exp.end.toLocaleString('default', { month: 'short', year: 'numeric' })
                     : 'Present'
-
                   return (
                     <div key={exp.role} className="flex flex-col gap-1 border-l-2 border-amber-400/40 pl-4">
                       <span className="text-sm font-semibold text-zinc-100">{exp.role}</span>
@@ -170,33 +179,33 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="AWS Certified — view credential on Credly, opens in a new tab"
-            className="group flex flex-col gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded"
+            className="group flex flex-col gap-1 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
           >
             <span className="text-3xl font-bold text-amber-400 sm:text-4xl">AWS</span>
-            <span className="text-sm text-zinc-500 group-hover:text-zinc-300 transition-colors duration-200">
+            <span className="text-sm text-zinc-500 transition-colors duration-200 group-hover:text-zinc-300">
               Certified ↗
             </span>
           </a>
 
-          {/* IEEE — links to publications */}
+          {/* IEEE */}
           <Link
             href="/publications#research"
-            className="group flex flex-col gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded"
+            className="group flex flex-col gap-1 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
           >
             <span className="text-3xl font-bold text-amber-400 sm:text-4xl">IEEE</span>
-            <span className="text-sm text-zinc-500 group-hover:text-zinc-300 transition-colors duration-200">
+            <span className="text-sm text-zinc-500 transition-colors duration-200 group-hover:text-zinc-300">
               Research →
             </span>
           </Link>
 
           {/* Blog — links to publications */}
           <Link
-            href="/publications#blog"
-            className="group flex flex-col gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded"
+            href="/publications"
+            className="group flex flex-col gap-1 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
           >
             <span className="text-3xl font-bold text-amber-400 sm:text-4xl">Blog</span>
-            <span className="text-sm text-zinc-500 group-hover:text-zinc-300 transition-colors duration-200">
-              Writing →
+            <span className="text-sm text-zinc-500 transition-colors duration-200 group-hover:text-zinc-300">
+              Publications →  {/* ← links to publications page */}
             </span>
           </Link>
 
