@@ -3,21 +3,30 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/publications', label: 'Publications' },
-  { href: '/contact', label: 'Contact' },
+  { label: 'Home',         href: '/' },
+  { label: 'Projects',     href: '/projects' },
+  { label: 'Publications', href: '/publications' },
+  { label: 'Writings',     href: '/writings' },
+  { label: 'Contact',      href: '/contact' },
 ]
 
 export default function Navbar() {
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [isNavigating, setIsNavigating] = useState(false)
+
+  useEffect(() => {
+    setIsNavigating(false)
+  }, [pathname])
 
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-950/80 backdrop-blur-md">
+      {isNavigating && (
+        <div className="h-1 w-full bg-amber-400 animate-pulse" />
+      )}
       <nav
         className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6 lg:px-8"
         aria-label="Main navigation"
@@ -36,6 +45,7 @@ export default function Navbar() {
               <li key={href}>
                 <Link
                   href={href}
+                  onClick={() => setIsNavigating(true)}
                   aria-current={isActive ? 'page' : undefined}
                   className={`rounded-md px-4 py-2 text-sm transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
                     isActive
@@ -83,7 +93,10 @@ export default function Navbar() {
                 <Link
                   key={href}
                   href={href}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={() => {
+                    setMenuOpen(false)
+                    setIsNavigating(true)
+                  }}
                   aria-current={isActive ? 'page' : undefined}
                   className={`rounded-md px-4 py-3 text-sm transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
                     isActive

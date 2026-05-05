@@ -15,3 +15,15 @@ model Contact {
   read      Boolean  @default(false)       // track if you've seen it
   createdAt DateTime @default(now())
 }
+
+model Post {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique  // URL-friendly version: "my-first-post"
+  excerpt     String            // Short summary shown on blog list
+  content     String            // Full markdown content
+  published   Boolean  @default(false)  // draft until you publish
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
