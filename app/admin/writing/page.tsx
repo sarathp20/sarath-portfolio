@@ -30,7 +30,7 @@ export default async function AdminWriting() {
     <div className="min-h-screen bg-zinc-950 flex">
 
       <AdminSidebar
-        activeSection="writing"
+        activeSection="writings"
         unread={unread}
         postCount={posts.length}
       />
