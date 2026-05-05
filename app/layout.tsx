@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     template: '%s — Sarath P',  // blog posts: "Post title — Sarath P"
   },
   description:
-    'Frontend Software Engineer with 4+ years at IBM. React, TypeScript, Node.js, AWS Certified. Based in Abu Dhabi, UAE.',
+    'Frontend Software Engineer with 4+ years at IBM. React, TypeScript, Node.js, AWS Certified.',
 
   // ── Open Graph — LinkedIn, WhatsApp, Facebook ──────────
   openGraph: {

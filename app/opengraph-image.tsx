@@ -81,18 +81,6 @@ export default async function Image() {
             </div>
           ))}
         </div>
-
-        {/* Bottom right — location */}
-        <div style={{
-          position:  'absolute',
-          bottom:    '60px',
-          right:     '80px',
-          fontSize:  '18px',
-          color:     '#52525b',
-          fontFamily: 'monospace',
-        }}>
-          Abu Dhabi, UAE
-        </div>
       </div>
     ),
     { ...size }
