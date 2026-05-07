@@ -2,6 +2,7 @@
 import type { Metadata } from 'next'
 import Navbar from './components/Navbar'
 import './globals.css'
+import ChatWidget from './components/ChatWidget'
 
 const BASE_URL = 'https://sarath-technical-portfolio.vercel.app'
 
@@ -56,6 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="bg-zinc-950 text-zinc-100 antialiased">
         <Navbar />
         <div className="pt-16">{children}</div>
+        <ChatWidget />  {/* ← add this */}
       </body>
     </html>
   )
